@@ -1,5 +1,6 @@
 package com.alexanderbukk.bars.ui.dashboard;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,16 @@ public class DashboardFragment extends Fragment {
             "Project",
             "Social",
     };
+    private int[] eventGroupColor = {
+            Color.MAGENTA,
+            Color.GREEN,
+            Color.DKGRAY,
+            Color.YELLOW,
+            Color.GRAY,
+            Color.RED,
+            Color.CYAN,
+            Color.BLUE,
+    };
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
@@ -48,7 +59,7 @@ public class DashboardFragment extends Fragment {
 
 
         rvEventGroup = binding.rvEventGroup;
-        RecyclerViewEventGroupAdapter rvega = new RecyclerViewEventGroupAdapter(getContext(), eventGroupNames);
+        RecyclerViewEventGroupAdapter rvega = new RecyclerViewEventGroupAdapter(getContext(), eventGroupNames, eventGroupColor);
         rvEventGroup.setAdapter(rvega);
         rvEventGroup.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
