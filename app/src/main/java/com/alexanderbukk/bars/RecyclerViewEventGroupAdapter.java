@@ -1,13 +1,14 @@
 package com.alexanderbukk.bars;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +53,16 @@ public class RecyclerViewEventGroupAdapter extends
 
             cvEventGroup = itemView.findViewById(R.id.cv_event_group);
             tvEventGroup = itemView.findViewById(R.id.tv_event_group);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Intent intent = new Intent(activity, EventListActivity.class);
+                    intent.putExtra("eventGroup", tvEventGroup.getText());
+                    activity.startActivity(intent);
+                }
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.alexanderbukk.bars;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,18 +10,28 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.alexanderbukk.bars.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        db = AppDatabase.getInstance(getApplicationContext(), "db");
+        UserDao userDao = db.userDao();
+        User user1 = new User();
+        user1.firstName = "Alexander";
+        user1.lastName = "Bükk";
+//        userDao.insertAll(user1);
+//        List<User> userList = userDao.getAll();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
