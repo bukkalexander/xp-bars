@@ -10,19 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.alexanderbukk.bars.ui.dashboard.DashboardViewModel;
+
+import java.util.List;
 
 public class RecyclerViewEventGroupAdapter extends
     RecyclerView.Adapter<RecyclerViewEventGroupAdapter.ViewHolderEventGroup> {
 
     private Context context;
-    private String[] eventGroupNames;
-    private int[] eventGroupColor;
+    private List<User> allUsers;
 
-    public RecyclerViewEventGroupAdapter(Context context, String[] eventGroupNames, int[] eventGroupColor) {
+    public RecyclerViewEventGroupAdapter(Context context, List<User> allUsers) {
         this.context = context;
-        this.eventGroupNames = eventGroupNames;
-        this.eventGroupColor = eventGroupColor;
+        this.allUsers = allUsers;
     }
 
     @NonNull
@@ -35,13 +39,21 @@ public class RecyclerViewEventGroupAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderEventGroup holder, int position) {
-        holder.tvEventGroup.setText(eventGroupNames[position]);
-        holder.cvEventGroup.setCardBackgroundColor(eventGroupColor[position]);
+        holder.tvEventGroup.setText(allUsers.get(position).firstName);
     }
 
     @Override
     public int getItemCount() {
-        return eventGroupNames.length;
+
+        if(allUsers == null || allUsers.isEmpty())
+            return 0;
+        else
+            return allUsers.size();
+    }
+
+    public void setAllUsers(List<User> allUsers) {
+        this.allUsers = allUsers;
+        notifyDataSetChanged();
     }
 
     public class ViewHolderEventGroup extends RecyclerView.ViewHolder{

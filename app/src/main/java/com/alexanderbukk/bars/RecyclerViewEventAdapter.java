@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewEventAdapter extends
-        RecyclerView.Adapter<RecyclerViewEventAdapter.ViewHolderEvent> {
+        RecyclerView.Adapter<ViewHolderEvent> {
 
     private Context context;
     private String[] eventNames;
@@ -41,25 +41,5 @@ public class RecyclerViewEventAdapter extends
         return eventNames.length;
     }
 
-    public class ViewHolderEvent extends RecyclerView.ViewHolder{
-        CardView cvEvent;
-        TextView tvEvent;
 
-        public ViewHolderEvent(@NonNull View itemView) {
-            super(itemView);
-
-            cvEvent = itemView.findViewById(R.id.cv_event);
-            tvEvent = itemView.findViewById(R.id.tv_event);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                    Intent intent = new Intent(activity, EventAdderActivity.class);
-                    intent.putExtra("event", tvEvent.getText());
-                    activity.startActivity(intent);
-                }
-            });
-        }
-    }
 }

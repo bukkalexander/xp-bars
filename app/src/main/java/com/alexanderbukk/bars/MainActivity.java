@@ -25,13 +25,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = AppDatabase.getInstance(getApplicationContext(), "db");
-        UserDao userDao = db.userDao();
-        User user1 = new User();
-        user1.firstName = "Alexander";
-        user1.lastName = "Bükk";
-//        userDao.insertAll(user1);
-//        List<User> userList = userDao.getAll();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

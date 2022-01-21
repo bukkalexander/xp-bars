@@ -1,19 +1,29 @@
 package com.alexanderbukk.bars.ui.dashboard;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+import com.alexanderbukk.bars.User;
+import com.alexanderbukk.bars.UserRepository;
 
-    private MutableLiveData<String> mText;
+import java.util.List;
 
-    public DashboardViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+public class DashboardViewModel extends AndroidViewModel {
+
+    private UserRepository repository;
+    private final LiveData<List<User>> allUsers;
+
+    public DashboardViewModel(Application application) {
+        super(application);
+        repository = new UserRepository(application);
+        allUsers = repository.getAllUsers();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<User>> getAllUsers() {
+        return allUsers;
     }
 }
