@@ -1,33 +1,35 @@
-package com.alexanderbukk.bars;
+package com.alexanderbukk.bars.data.group;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.alexanderbukk.bars.data.AppDatabase;
+
 import java.util.List;
 
-public class UserRepository {
+public class GroupRepository {
     
-    private UserDao userDao;
-    private LiveData<List<User>> allUsers;
+    private GroupDao groupDao;
+    private LiveData<List<Group>> allUsers;
     
-    public UserRepository(Application application) {
+    public GroupRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
-        userDao = db.UserDao();
-        allUsers = userDao.getAll();
+        groupDao = db.UserDao();
+        allUsers = groupDao.getAll();
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    public LiveData<List<User>> getAllUsers() {
+    public LiveData<List<Group>> getAllUsers() {
         return allUsers;
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
-    public void insert(User user) {
+    public void insert(Group group) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
-            userDao.insertAll(user);
+            groupDao.insertAll(group);
         });
     }
 }

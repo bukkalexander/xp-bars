@@ -1,14 +1,14 @@
-package com.alexanderbukk.bars.ui.home;
+package com.alexanderbukk.bars.ui.bars;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class BarsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public BarsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

@@ -1,38 +1,37 @@
-package com.alexanderbukk.bars;
+package com.alexanderbukk.bars.ui.event;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerViewEventAdapter extends
-        RecyclerView.Adapter<ViewHolderEvent> {
+import com.alexanderbukk.bars.R;
+import com.alexanderbukk.bars.ui.event.EventViewHolder;
+
+public class EventRecyclerViewAdapter extends
+        RecyclerView.Adapter<EventViewHolder> {
 
     private Context context;
     private String[] eventNames;
 
-    public RecyclerViewEventAdapter(Context context, String[] eventNames) {
+    public EventRecyclerViewAdapter(Context context, String[] eventNames) {
         this.context = context;
         this.eventNames = eventNames;
     }
 
     @NonNull
     @Override
-    public ViewHolderEvent onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.card_view_event, parent, false);
-        return new ViewHolderEvent(view);
+        return new EventViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderEvent holder, int position) {
+    public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         holder.tvEvent.setText(eventNames[position]);
     }
 

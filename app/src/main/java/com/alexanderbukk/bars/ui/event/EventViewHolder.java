@@ -1,4 +1,4 @@
-package com.alexanderbukk.bars;
+package com.alexanderbukk.bars.ui.event;
 
 import android.content.Intent;
 import android.view.View;
@@ -9,11 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ViewHolderEvent extends RecyclerView.ViewHolder{
+import com.alexanderbukk.bars.ui.eventeditor.EventEditorActivity;
+import com.alexanderbukk.bars.R;
+
+public class EventViewHolder extends RecyclerView.ViewHolder{
     CardView cvEvent;
     TextView tvEvent;
 
-    public ViewHolderEvent(@NonNull View itemView) {
+    public EventViewHolder(@NonNull View itemView) {
         super(itemView);
 
         cvEvent = itemView.findViewById(R.id.cv_event);
@@ -23,7 +26,7 @@ public class ViewHolderEvent extends RecyclerView.ViewHolder{
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Intent intent = new Intent(activity, EventAdderActivity.class);
+                Intent intent = new Intent(activity, EventEditorActivity.class);
                 intent.putExtra("event", tvEvent.getText());
                 activity.startActivity(intent);
             }

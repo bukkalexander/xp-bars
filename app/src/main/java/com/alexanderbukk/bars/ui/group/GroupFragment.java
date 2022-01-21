@@ -1,4 +1,4 @@
-package com.alexanderbukk.bars.ui.dashboard;
+package com.alexanderbukk.bars.ui.group;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,25 +6,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alexanderbukk.bars.RecyclerViewEventGroupAdapter;
-import com.alexanderbukk.bars.User;
+import com.alexanderbukk.bars.data.group.Group;
 import com.alexanderbukk.bars.databinding.FragmentDashboardBinding;
 
 import java.util.List;
 
-public class DashboardFragment extends Fragment {
+public class GroupFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private GroupViewModel groupViewModel;
     private FragmentDashboardBinding binding;
 
     private RecyclerView rvEventGroup;
@@ -50,7 +48,7 @@ public class DashboardFragment extends Fragment {
     };
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -58,16 +56,16 @@ public class DashboardFragment extends Fragment {
 
 
         rvEventGroup = binding.rvEventGroup;
-        RecyclerViewEventGroupAdapter rvega = new RecyclerViewEventGroupAdapter(getContext(), dashboardViewModel.getAllUsers().getValue());
+        GroupRecyclerViewAdapter rvega = new GroupRecyclerViewAdapter(getContext(), groupViewModel.getAllUsers().getValue());
         rvEventGroup.setAdapter(rvega);
         rvEventGroup.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         //final TextView textView = binding.textDashboard;
         //rvega.setAllUsers(dashboardViewModel.getAllUsers().getValue());
-        dashboardViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
+        groupViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<Group>>() {
             @Override
-            public void onChanged(@Nullable List<User> users) {
-                rvega.setAllUsers(users);
+            public void onChanged(@Nullable List<Group> groups) {
+                rvega.setAllUsers(groups);
             }
         });
 
@@ -77,12 +75,12 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<User> allUsers = dashboardViewModel.getAllUsers().getValue();
+        List<Group> allGroups = groupViewModel.getAllUsers().getValue();
         int size;
-        if(allUsers == null || allUsers.isEmpty())
+        if(allGroups == null || allGroups.isEmpty())
             size = 0;
         else
-            size = allUsers.size();
+            size = allGroups.size();
 
 
         Log.d("DashboardFragment.java, onResume()", Integer.toString(size));

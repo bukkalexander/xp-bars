@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bars">
         <activity
-            android:name=".EventAdderActivity"
+            android:name=".ui.eventeditor.EventEditorActivity"
             android:exported="false" />
         <activity
-            android:name=".EventListActivity"
+            android:name=".ui.event.EventActivity"
             android:exported="false"
             android:label="test" />
         <activity

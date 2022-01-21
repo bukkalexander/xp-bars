@@ -1,10 +1,12 @@
-package com.alexanderbukk.bars;
+package com.alexanderbukk.bars.ui.eventeditor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class EventAdderActivity extends AppCompatActivity {
+import com.alexanderbukk.bars.R;
+
+public class EventEditorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

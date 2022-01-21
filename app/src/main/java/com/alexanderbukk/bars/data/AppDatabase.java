@@ -1,29 +1,31 @@
-package com.alexanderbukk.bars;
+package com.alexanderbukk.bars.data;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.alexanderbukk.bars.data.group.Group;
+import com.alexanderbukk.bars.data.group.GroupDao;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 1, exportSchema = true)
-abstract class AppDatabase extends RoomDatabase {
+@Database(entities = {Group.class}, version = 1, exportSchema = true)
+public abstract class AppDatabase extends RoomDatabase {
 
-    abstract UserDao UserDao();
+    public abstract GroupDao UserDao();
 
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
+    public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
 
-    static AppDatabase getDatabase(final Context context) {
+    public static AppDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
@@ -45,13 +47,13 @@ abstract class AppDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more users, just add them.
-                UserDao userDao = INSTANCE.UserDao();
-                userDao.deleteAll();
+                GroupDao groupDao = INSTANCE.UserDao();
+                groupDao.deleteAll();
 
-                User user = new User("Alexander4", "Bükk");
-                User user2 = new User("Therese", "Berntsson");
-                User user3 = new User("Therese", "Berntsson");
-                userDao.insertAll(user, user2, user3);
+                Group group = new Group("Alexander4", "Bükk");
+                Group group2 = new Group("Therese", "Berntsson");
+                Group group3 = new Group("Therese", "Berntsson");
+                groupDao.insertAll(group, group2, group3);
             });
         }
     };

@@ -1,4 +1,4 @@
-package com.alexanderbukk.bars.ui.home;
+package com.alexanderbukk.bars.ui.calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,24 +10,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import com.alexanderbukk.bars.R;
-import com.alexanderbukk.bars.databinding.FragmentHomeBinding;
 
-public class HomeFragment extends Fragment {
+import com.alexanderbukk.bars.databinding.FragmentNotificationsBinding;
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+public class CalendarFragment extends Fragment {
+
+    private CalendarViewModel calendarViewModel;
+private FragmentNotificationsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        calendarViewModel =
+                new ViewModelProvider(this).get(CalendarViewModel.class);
 
-    binding = FragmentHomeBinding.inflate(inflater, container, false);
+    binding = FragmentNotificationsBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textNotifications;
+        calendarViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

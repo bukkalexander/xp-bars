@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EventAdderActivity">
+    tools:context=".ui.eventeditor.EventEditorActivity">
 
     <ScrollView
         android:layout_width="match_parent"

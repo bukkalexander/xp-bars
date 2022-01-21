@@ -1,4 +1,4 @@
-package com.alexanderbukk.bars;
+package com.alexanderbukk.bars.ui.event;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-public class EventListActivity extends AppCompatActivity {
+import com.alexanderbukk.bars.R;
+
+public class EventActivity extends AppCompatActivity {
 
     String[] eventNames = {"1", "2", "3", "4"};
 
@@ -19,7 +21,7 @@ public class EventListActivity extends AppCompatActivity {
 
 
         RecyclerView rvEvent = findViewById(R.id.rv_event);
-        RecyclerViewEventAdapter rvea = new RecyclerViewEventAdapter(this, eventNames);
+        EventRecyclerViewAdapter rvea = new EventRecyclerViewAdapter(this, eventNames);
         rvEvent.setAdapter(rvea);
         rvEvent.setLayoutManager(new LinearLayoutManager(this));
 
