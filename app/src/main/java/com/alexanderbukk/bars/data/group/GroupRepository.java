@@ -15,7 +15,7 @@ public class GroupRepository {
     
     public GroupRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
-        groupDao = db.UserDao();
+        groupDao = db.GroupDao();
         allUsers = groupDao.getAll();
     }
 

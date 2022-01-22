@@ -6,8 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.alexanderbukk.bars.data.group.Group;
-
 import java.util.List;
 
 @Dao
@@ -16,12 +14,11 @@ public interface GroupDao {
     @Query("SELECT * FROM `group`")
     LiveData<List<Group>> getAll();
 
-    @Query("SELECT * FROM `group` WHERE uid IN (:groupIds)")
-    LiveData<List<Group>> loadAllByIds(int[] groupIds);
+    @Query("SELECT * FROM `group` WHERE uid IN (:rowIds)")
+    LiveData<List<Group>> getRowsByIds(int[] rowIds);
 
-    @Query("SELECT * FROM `group` WHERE first_name LIKE :first AND " +
-            "last_name LIKE :last LIMIT 1")
-    LiveData<Group> findByName(String first, String last);
+    @Query("SELECT * FROM `group` WHERE name LIKE :name LIMIT 1")
+    LiveData<Group> getRowByName(String name);
 
     @Insert
     void insertAll(Group... groups);

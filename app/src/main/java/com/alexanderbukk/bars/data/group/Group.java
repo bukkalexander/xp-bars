@@ -5,20 +5,26 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDateTime;
+
 @Entity(tableName = "group")
 public class Group {
 
     @PrimaryKey(autoGenerate = true)
     public int uid = 0;
 
-    @ColumnInfo(name = "first_name")
-    public String firstName;
+    @ColumnInfo(name = "name")
+    public String name;
 
-    @ColumnInfo(name = "last_name")
-    public String lastName;
+    @ColumnInfo(name = "color")
+    public int color;
 
-    public Group(@NonNull String firstName, @NonNull String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    @ColumnInfo(name = "date_time_created")
+    public LocalDateTime localDateTimeCreated;
+
+    public Group(@NonNull String name, @NonNull int color) {
+        this.name = name;
+        this.color = color;
+        this.localDateTimeCreated = LocalDateTime.now();
     }
 }

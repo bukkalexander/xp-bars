@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "522e5bba94e4f566b4dc95f907128e29",
+    "identityHash": "5e514a992ffc8a30a46a9137201236c5",
     "entities": [
       {
         "tableName": "group",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `first_name` TEXT, `last_name` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `color` INTEGER NOT NULL, `date_time_created` INTEGER)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -15,15 +15,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "firstName",
-            "columnName": "first_name",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "lastName",
-            "columnName": "last_name",
-            "affinity": "TEXT",
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localDateTimeCreated",
+            "columnName": "date_time_created",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -40,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '522e5bba94e4f566b4dc95f907128e29')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e514a992ffc8a30a46a9137201236c5')"
     ]
   }
 }

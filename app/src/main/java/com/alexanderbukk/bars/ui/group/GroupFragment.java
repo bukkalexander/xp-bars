@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alexanderbukk.bars.data.AppDatabase;
 import com.alexanderbukk.bars.data.group.Group;
 import com.alexanderbukk.bars.databinding.FragmentDashboardBinding;
 
@@ -24,28 +25,7 @@ public class GroupFragment extends Fragment {
 
     private GroupViewModel groupViewModel;
     private FragmentDashboardBinding binding;
-
     private RecyclerView rvEventGroup;
-    private String[] eventGroupNames = {
-            "Chores",
-            "Wellness",
-            "Fitness",
-            "Study",
-            "Work",
-            "Entrepreneur",
-            "Project",
-            "Social",
-    };
-    private int[] eventGroupColor = {
-            Color.MAGENTA,
-            Color.GREEN,
-            Color.DKGRAY,
-            Color.YELLOW,
-            Color.GRAY,
-            Color.RED,
-            Color.CYAN,
-            Color.BLUE,
-    };
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);

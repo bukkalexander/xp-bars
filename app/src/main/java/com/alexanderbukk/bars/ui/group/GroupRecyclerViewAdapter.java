@@ -1,6 +1,7 @@
 package com.alexanderbukk.bars.ui.group;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,8 @@ public class GroupRecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
-        holder.tvEventGroup.setText(allGroups.get(position).firstName);
+        holder.tvEventGroup.setText(allGroups.get(position).name);
+        holder.cvEventGroup.setCardBackgroundColor(allGroups.get(position).color);
     }
 
     @Override
