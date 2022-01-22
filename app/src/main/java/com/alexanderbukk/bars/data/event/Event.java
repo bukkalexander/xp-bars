@@ -41,11 +41,11 @@ public class Event {
     @ColumnInfo(name = "created")
     public LocalDateTime localDateTimeCreated;
 
-    public Event(@NonNull String name, @NonNull String group, @NonNull String description,
+    public Event(@NonNull String group, @NonNull String name, @NonNull String description,
                  int barsPerOccurrence, int barsPerHour, int barsForYesterday, int barsDailyLimit,
                  int durationMinutes) {
-        this.name = name;
         this.group = group;
+        this.name = name;
         this.description = description;
         this.barsPerOccurrence = barsPerOccurrence;
         this.barsPerHour = barsPerHour;
