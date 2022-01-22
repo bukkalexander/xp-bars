@@ -10,16 +10,24 @@
         <entry key="..\:/Users/alexa/workspace/Bars/app/src/main/res/layout/fragment_home.xml" value="0.46693840579710144" />
         <entry key="..\:/Users/alexa/workspace/Bars/app/src/main/res/layout/fragment_notifications.xml" value="0.371875" />
         <entry key="..\:/Users/alexa/workspace/Bars/app/src/main/res/menu/bottom_nav_menu.xml" value="0.371875" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.33611111111111114" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2546875" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/drawable/ic_stats_black_24dp.xml" value="0.2546875" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/activity_event_adder.xml" value="0.334375" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/activity_event_list.xml" value="0.559375" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/card_view_event.xml" value="0.5588541666666667" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/card_view_event_group.xml" value="0.2626582278481013" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/card_view_group.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_calendar.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_dashboard.xml" value="0.559375" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_event.xml" value="0.5588541666666667" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_home.xml" value="0.559375" />
-        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_stats.xml" value="0.5453125" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_progress.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_reward.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/fragment_stats.xml" value="0.5307068366164542" />
         <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/layout/group_event.xml" value="0.390625" />
+        <entry key="..\:/Users/alexa/workspace/xp-bars/app/src/main/res/menu/bottom_nav_menu.xml" value="0.23854166666666668" />
       </map>
     </option>
   </component>

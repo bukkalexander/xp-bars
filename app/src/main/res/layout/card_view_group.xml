@@ -8,7 +8,7 @@
     android:padding="2dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_event_group"
+        android:id="@+id/cv_group"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,10 +19,9 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_event_group"
+                android:id="@+id/tv_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Event Group"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

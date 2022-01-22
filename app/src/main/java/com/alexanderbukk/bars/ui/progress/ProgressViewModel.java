@@ -1,14 +1,14 @@
-package com.alexanderbukk.bars.ui.bars;
+package com.alexanderbukk.bars.ui.progress;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class BarsViewModel extends ViewModel {
+public class ProgressViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public BarsViewModel() {
+    public ProgressViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

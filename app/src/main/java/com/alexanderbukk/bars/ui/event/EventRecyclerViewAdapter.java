@@ -9,17 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexanderbukk.bars.R;
+import com.alexanderbukk.bars.data.event.Event;
 import com.alexanderbukk.bars.ui.event.EventViewHolder;
+
+import java.util.List;
 
 public class EventRecyclerViewAdapter extends
         RecyclerView.Adapter<EventViewHolder> {
 
     private Context context;
-    private String[] eventNames;
+    private List<Event> events;
 
-    public EventRecyclerViewAdapter(Context context, String[] eventNames) {
+    public EventRecyclerViewAdapter(Context context, List<Event> events) {
         this.context = context;
-        this.eventNames = eventNames;
+        this.events = events;
     }
 
     @NonNull
@@ -32,13 +35,20 @@ public class EventRecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        holder.tvEvent.setText(eventNames[position]);
+        holder.tvEvent.setText(events.get(position).name);
     }
 
     @Override
     public int getItemCount() {
-        return eventNames.length;
+        if(events == null || events.isEmpty())
+            return 0;
+        else
+            return events.size();
     }
 
 
+    public void setAllEvents(List<Event> events) {
+        this.events = events;
+        notifyDataSetChanged();
+    }
 }

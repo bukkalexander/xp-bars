@@ -10,17 +10,30 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.alexanderbukk.bars.data.event.Event;
+import com.alexanderbukk.bars.data.event.EventDao;
+import com.alexanderbukk.bars.data.eventinstance.EventInstance;
+import com.alexanderbukk.bars.data.eventinstance.EventInstanceDao;
 import com.alexanderbukk.bars.data.group.Group;
 import com.alexanderbukk.bars.data.group.GroupDao;
+import com.alexanderbukk.bars.data.reward.Reward;
+import com.alexanderbukk.bars.data.reward.RewardDao;
+import com.alexanderbukk.bars.data.rewardinstance.RewardInstance;
+import com.alexanderbukk.bars.data.rewardinstance.RewardInstanceDao;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Group.class}, version = 1, exportSchema = true)
+@Database(entities = {Group.class, Event.class, EventInstance.class, Reward.class,
+    RewardInstance.class}, version = 1, exportSchema = true)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract GroupDao GroupDao();
+    public abstract EventDao EventDao();
+    public abstract EventInstanceDao EventInstanceDao();
+    public abstract RewardDao RewardDao();
+    public abstract RewardInstanceDao RewardInstanceDao();
 
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -33,7 +46,7 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "user_database")
+                            AppDatabase.class, "app_database")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }

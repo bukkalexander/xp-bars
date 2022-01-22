@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Bars</string>
-    <string name="title_home">Progress</string>
-    <string name="title_dashboard">Add Event</string>
-    <string name="title_notifications">Calendar</string>
+    <string name="title_progress">Progress</string>
+    <string name="title_group">Add Event</string>
+    <string name="title_reward">Rewards</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_stats">stats</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
