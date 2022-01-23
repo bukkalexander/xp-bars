@@ -15,21 +15,65 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editTextTextPersonName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Add title" />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/etBars"
+                <EditText
+                    android:id="@+id/etEventInstanceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="9"
+                    android:textSize="25dp"
+                    android:inputType="text"
+                    android:hint="(Add title)"
+                    android:background="@null"
+                    android:textAlignment="center"/>
+
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/white"
+                    android:text="Save" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number"
-                android:text="2" />
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="20dp"
+                    android:text="Bars"/>
+
+                <EditText
+                    android:id="@+id/etBars"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textSize="20dp"
+                    android:hint="2"
+                    android:gravity="center_vertical"
+                    android:background="@null"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/etdStartTime"
@@ -37,12 +81,15 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="date"
-                android:text="Start time"/>
+                android:text="Start time"
+                android:layout_marginLeft="20dp"
+                android:background="@null"/>
             <TimePicker
                 android:id="@+id/simpleTimePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:timePickerMode="clock"
+                android:visibility="gone"
                 />
 
 
@@ -52,7 +99,9 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="date"
-                android:text="End time"/>
+                android:text="End time"
+                android:layout_marginLeft="20dp"
+                android:background="@null"/>
 
 
             <EditText
@@ -62,20 +111,15 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:text="Comment"/>
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save" />
+                android:text="Comment"
+                android:layout_marginLeft="20dp"
+                android:background="@null"/>
 
             <CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>
