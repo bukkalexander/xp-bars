@@ -84,7 +84,7 @@
                 android:paddingVertical="20dp">
 
                 <ImageView
-                    android:id="@+id/iwCategory"
+                    android:id="@+id/ivCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_circle_24"
@@ -104,11 +104,11 @@
                     android:textSize="18sp"
                     android:background="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iwCategory"
+                    app:layout_constraintStart_toEndOf="@+id/ivCategory"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/iwRight"
+                    android:id="@+id/ivRight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
@@ -124,10 +124,10 @@
                     android:text="Study"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/iwRight"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivRight"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iwRight"
-                    app:layout_constraintTop_toTopOf="@+id/iwRight" />
+                    app:layout_constraintStart_toEndOf="@+id/ivRight"
+                    app:layout_constraintTop_toTopOf="@+id/ivRight" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -143,7 +143,7 @@
                 android:paddingHorizontal="20dp">
 
                 <ImageView
-                    android:id="@+id/iwStartTime"
+                    android:id="@+id/ivStartTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_calendar_month_24"
@@ -152,46 +152,46 @@
                     app:tint="@color/black" />
 
                 <TextView
-                    android:id="@+id/twStartDate"
+                    android:id="@+id/tvStartDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="Mon, Jan 24, 2020"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/iwStartTime"
-                    app:layout_constraintTop_toTopOf="@+id/iwStartTime" />
+                    app:layout_constraintStart_toEndOf="@+id/ivStartTime"
+                    app:layout_constraintTop_toTopOf="@+id/ivStartTime" />
 
                 <TextView
-                    android:id="@+id/twStartTime"
+                    android:id="@+id/tvStartTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="21:35"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/twStartDate" />
+                    app:layout_constraintTop_toTopOf="@+id/tvStartDate" />
 
                 <TextView
-                    android:id="@+id/twEndDate"
+                    android:id="@+id/tvEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Mon, Jan 24, 2020"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="@+id/twStartDate"
-                    app:layout_constraintTop_toBottomOf="@id/twStartDate" />
+                    app:layout_constraintStart_toStartOf="@+id/tvStartDate"
+                    app:layout_constraintTop_toBottomOf="@id/tvStartDate" />
 
                 <TextView
-                    android:id="@+id/twEndTime"
+                    android:id="@+id/tvEndTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="21:55"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="@+id/twStartTime"
-                    app:layout_constraintTop_toTopOf="@+id/twEndDate" />
+                    app:layout_constraintStart_toStartOf="@+id/tvStartTime"
+                    app:layout_constraintTop_toTopOf="@+id/tvEndDate" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -209,7 +209,7 @@
                 android:paddingVertical="20dp">
 
                 <ImageView
-                    android:id="@+id/iwDescription"
+                    android:id="@+id/ivDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_notes_24"
@@ -221,17 +221,17 @@
 
                 <EditText
                     android:layout_width="0dp"
-                    android:id="@+id/twDescription"
+                    android:id="@+id/tvDescription"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@null"
-                    android:hint="Add comment"
+                    android:hint="Add description"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iwDescription"
+                    app:layout_constraintStart_toEndOf="@+id/ivDescription"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
