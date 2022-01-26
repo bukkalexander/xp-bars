@@ -1,6 +1,7 @@
 package com.alexanderbukk.bars.ui.event;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class EventRecyclerViewAdapter extends
 
     private Context context;
     private List<Event> events;
+    private int eventColor = 0;
 
     public EventRecyclerViewAdapter(Context context, List<Event> events) {
         this.context = context;
@@ -35,7 +37,9 @@ public class EventRecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
+        holder.cvEvent.setCardBackgroundColor(eventColor);
         holder.tvEvent.setText(events.get(position).name);
+        holder.tvEvent.setTextColor(Color.WHITE);
     }
 
     @Override
@@ -50,5 +54,9 @@ public class EventRecyclerViewAdapter extends
     public void setAllEvents(List<Event> events) {
         this.events = events;
         notifyDataSetChanged();
+    }
+
+    public void setEventColor(int eventColor) {
+        this.eventColor = eventColor;
     }
 }

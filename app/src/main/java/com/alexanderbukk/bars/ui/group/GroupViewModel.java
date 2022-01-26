@@ -13,15 +13,15 @@ import java.util.List;
 public class GroupViewModel extends AndroidViewModel {
 
     private GroupRepository repository;
-    private final LiveData<List<Group>> allUsers;
+    private final LiveData<List<Group>> allGroups;
 
     public GroupViewModel(Application application) {
         super(application);
         repository = new GroupRepository(application);
-        allUsers = repository.getAllUsers();
+        allGroups = repository.getAllGroups();
     }
 
-    public LiveData<List<Group>> getAllUsers() {
-        return allUsers;
+    public LiveData<List<Group>> getAllGroups() {
+        return allGroups;
     }
 }

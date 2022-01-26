@@ -28,6 +28,7 @@ public class GroupViewHolder extends RecyclerView.ViewHolder{
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Intent intent = new Intent(activity, EventActivity.class);
                 intent.putExtra("group", tvGroup.getText());
+                intent.putExtra("color", cvGroup.getSolidColor());
                 activity.startActivity(intent);
             }
         });

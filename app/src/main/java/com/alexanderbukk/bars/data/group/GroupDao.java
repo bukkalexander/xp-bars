@@ -17,7 +17,7 @@ public interface GroupDao {
     @Query("SELECT * FROM `group` WHERE uid IN (:rowIds)")
     LiveData<List<Group>> getRowsByIds(int[] rowIds);
 
-    @Query("SELECT * FROM `group` WHERE name LIKE :name LIMIT 1")
+    @Query("SELECT * FROM `group` WHERE name = :name")
     LiveData<Group> getRowByName(String name);
 
     @Insert

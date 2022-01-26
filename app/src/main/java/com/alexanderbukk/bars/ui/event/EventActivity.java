@@ -46,5 +46,12 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
+        eventViewModel.getAllGroups().observe(this, new Observer<List<Group>>() {
+            @Override
+            public void onChanged(@Nullable List<Group> group) {
+                rvea.setEventColor(eventViewModel.getEventColor(groupName));
+            }
+        });
+
     }
 }

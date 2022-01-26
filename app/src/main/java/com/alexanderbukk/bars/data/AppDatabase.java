@@ -64,16 +64,19 @@ public abstract class AppDatabase extends RoomDatabase {
                 // Populate the database in the background.
                 GroupDao groupDao = INSTANCE.GroupDao();
                 String[] colorString = {
-                    "#ff35a0",
-                    "#a2af48",
-                    "#7cd9b4",
-                    "#f5deb3",
-                    "#d2afff",
-                    "#7692bf",
-                    "#ffd15c",
-                    "#d32e36",
-                    "#58babf",
-                    "#f68c20"
+                    "#4285F4",  //  0:blue
+                    "#FF0080",  //  1:pink
+                    "#8E24AA",  //  2:purple
+                    "#F6BF26",  //  3:light yellow
+                    "#7F1F17",  //  4:brown
+                    "#7986CB",  //  5:light blue
+                    "#F09300",  //  6:orange
+                    "#3F51B5",  //  7:deep blue
+                    "#000000",  //  8:black
+                    "#33B679",  //  9:green
+                    "#494F52",  // 10:gray
+                    "#D50000",  // 11:red
+                    "#B83309",  // 12:brown red
                 };
                 int[] c = new int[colorString.length];
                 for(int i = 0; i < colorString.length; i++) {
@@ -81,52 +84,56 @@ public abstract class AppDatabase extends RoomDatabase {
                 }
 
                 groupDao.insertAll(
-                    new Group("Chores", c[0]),
-                    new Group("Health", c[1]),
-                    new Group("Hygiene", c[4]),
-                    new Group("Work", c[5]),
-                    new Group("Social", c[9])
+                    new Group("Chores", c[2]),
+                    new Group("Mental", c[9]),
+                    new Group("Nutrition", c[8]),
+                    new Group("Social", c[6]),
+                    new Group("Workout", c[12]),
+                    new Group("Hygiene", c[1]),
+                    new Group("Study", c[3]),
+                    new Group("Work", c[10]),
+                    new Group("Project", c[5]),
+                    new Group("Business", c[11])
                 );
 
                 EventDao eventDao = INSTANCE.EventDao();
                 eventDao.insertAll(
-                        new Event("Chores","Starting laundry","",1,0,0,0,10),
-                        new Event("Chores","Hanging laundry","",1,0,0,0,10),
-                        new Event("Chores","taking down laundry","",1,0,0,0,10),
-                        new Event("Chores","Starting dishwasher","",1,0,0,0,10),
-                        new Event("Chores","Emptying dishwasher","",1,0,0,0,10),
-                        new Event("Chores","Emptying trash","",1,0,0,0,5),
+                        new Event("Chores","Laundry start","",1,0,0,0,10),
+                        new Event("Chores","Laundry up","",1,0,0,0,10),
+                        new Event("Chores","Laundry down","",1,0,0,0,10),
+                        new Event("Chores","Dishwasher start ","",1,0,0,0,10),
+                        new Event("Chores","Dishwasher out","",1,0,0,0,10),
+                        new Event("Chores","Empty trash","",1,0,0,0,5),
                         new Event("Chores","Putting things in order","",2,0,0,0,20),
                         new Event("Chores","Vacuum cleaning","",2,0,0,0,20),
-                        new Event("Chores","Cleaning toilet","",2,0,0,0,20),
+                        new Event("Chores","Toilet cleaning","",2,0,0,0,20),
                         new Event("Chores","Doing dishes","",2,0,0,0,20),
                         new Event("Chores","Buying groceries","",3,0,0,0,30),
                         new Event("Chores","Cooking meals","",0,6,0,0,60),
                         new Event("Chores","Emptying recycling","",6,0,0,0,60),
-                        new Event("Chores","Cleaning refrigerator","",10,0,0,0,100),
+                        new Event("Chores","Refrigerator cleaning","",10,0,0,0,100),
                         new Event("Chores","Björn chores","",0,6,0,0,15),
-                        new Event("Health","Main exercise","",3,0,2,0,30),
-                        new Event("Health","Secondary exercise","",1,0,0,0,10),
-                        new Event("Health","Running >= 10 min","",1,0,0,1,10),
-                        new Event("Health","Walking >= 30 min","",3,0,0,3,60),
-                        new Event("Health","Meditation","",0,12,2,20,10),
-                        new Event("Health","Making bed + vitamins","",1,0,1,1,10),
-                        new Event("Health","Omega3 + creatine","",1,0,0,1,5),
-                        new Event("Hygiene","Shower","",1,0,0,1,15),
-                        new Event("Hygiene","Flossing","",1,0,1,1,10),
+                        new Event("Workout","Gym","",2,4,4,0,60),
+                        new Event("Workout","Running","",2,4,0,0,30),
+                        new Event("Workout","Walking","",0,4,0,4,45),
+                        new Event("Mental","Meditation","",1,6,2,20,10),
+                        new Event("Nutrition","Making bed + vitamins","",1,0,1,2,10),
+                        new Event("Nutrition","Omega3 + creatine","",1,0,0,1,5),
+                        new Event("Hygiene","Shower","",2,0,0,1,15),
+                        new Event("Hygiene","Flossing","",2,0,1,3,10),
                         new Event("Hygiene","Trimming nails","",1,0,0,1,10),
                         new Event("Hygiene","Shaving beard - Machine","",1,0,0,1,10),
                         new Event("Hygiene","Shaving beard - Razor","",1,0,0,1,10),
                         new Event("Hygiene","Shaving body - Machine","",2,0,0,2,20),
                         new Event("Hygiene","Shaving beard - Razor","",2,0,0,2,20),
                         new Event("Hygiene","Going to dentist","",20,0,0,0,100),
-                        new Event("Work","Volvo","",0,5,0,0,60),
-                        new Event("Work","Study","",0,10,10,0,60),
-                        new Event("Work","Business","",0,10,10,0,60),
-                        new Event("Work","Hobby project","",0,5,0,0,60),
-                        new Event("Social","Conversation","conversation with family and close friends, per person per week",3,0,0,3,30),
-                        new Event("Social","Meal/series with Therese","",3,0,0,3,30),
-                        new Event("Social","Kind to Therese","",5,0,0,5,15)
+                        new Event("Work","Volvo","No points for meetings that doesn't include actual, important work, such as stand-up or weekly demos",0,5,0,0,60),
+                        new Event("Study","Algorithms","",0,10,10,0,60),
+                        new Event("Business","Developer course","",0,10,10,0,60),
+                        new Event("Project","XP-Bars","",0,5,0,0,60),
+                        new Event("Project","AndroidStudio2DGameDevelopment","",0,5,0,0,60),
+                        new Event("Social","Phone call","conversation with family and close friends, per person per week",5,0,0,5,60),
+                        new Event("Social","Massage","",5,0,0,5,15)
                 );
             });
         }

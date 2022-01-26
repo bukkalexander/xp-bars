@@ -1,4 +1,4 @@
-package com.alexanderbukk.bars.ui.event;
+package com.alexanderbukk.bars.ui.eventeditor;
 
 import android.app.Application;
 
@@ -13,7 +13,7 @@ import com.alexanderbukk.bars.data.group.GroupRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventViewModel extends AndroidViewModel {
+public class EventEditorViewModel extends AndroidViewModel {
 
 
     private GroupRepository groupRepository;
@@ -22,7 +22,7 @@ public class EventViewModel extends AndroidViewModel {
     private final LiveData<List<Group>> allGroups;
 
 
-    public EventViewModel(Application application) {
+    public EventEditorViewModel(Application application) {
         super(application);
         eventRepository = new EventRepository(application);
         groupRepository = new GroupRepository(application);
@@ -50,9 +50,9 @@ public class EventViewModel extends AndroidViewModel {
 
     public int getEventColor(String groupName) {
 
-            for (Group group : allGroups.getValue())
-                if (group.name.equals(groupName))
-                    return group.color;
-            return 0;
+        for (Group group : allGroups.getValue())
+            if (group.name.equals(groupName))
+                return group.color;
+        return 0;
     }
 }

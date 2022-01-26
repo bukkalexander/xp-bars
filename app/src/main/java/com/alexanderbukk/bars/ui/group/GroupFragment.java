@@ -33,11 +33,11 @@ public class GroupFragment extends Fragment {
         View root = binding.getRoot();
 
         rvGroup = binding.rvGroup;
-        GroupRecyclerViewAdapter rvega = new GroupRecyclerViewAdapter(getContext(), groupViewModel.getAllUsers().getValue());
+        GroupRecyclerViewAdapter rvega = new GroupRecyclerViewAdapter(getContext(), groupViewModel.getAllGroups().getValue());
         rvGroup.setAdapter(rvega);
         rvGroup.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        groupViewModel.getAllUsers().observe(getViewLifecycleOwner(), new Observer<List<Group>>() {
+        groupViewModel.getAllGroups().observe(getViewLifecycleOwner(), new Observer<List<Group>>() {
             @Override
             public void onChanged(@Nullable List<Group> groups) {
                 rvega.setAllUsers(groups);
@@ -50,7 +50,7 @@ public class GroupFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<Group> allGroups = groupViewModel.getAllUsers().getValue();
+        List<Group> allGroups = groupViewModel.getAllGroups().getValue();
         int size;
         if(allGroups == null || allGroups.isEmpty())
             size = 0;

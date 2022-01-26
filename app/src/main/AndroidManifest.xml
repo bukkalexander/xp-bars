@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Bars">
         <activity
             android:name=".ui.eventeditor.EventEditorActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Event" />
         <activity
             android:name=".ui.event.EventActivity"
             android:exported="false"

@@ -11,5 +11,7 @@
     <color name="test_primary_variant">#FFFFFFFF</color>
     <color name="test_secondary">#2175F3</color>
     <color name="test_secondary_variant">#FFFFFFFF</color>
+    <color name="gray">#E2E2E2</color>
+    <color name="pink">#FF0080</color>
 
 </resources>
