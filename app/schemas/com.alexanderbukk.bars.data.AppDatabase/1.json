@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b2f709a05d25eeff2577bfae3e554fd0",
+    "identityHash": "06ecd97091295ba345727bfd875b4f06",
     "entities": [
       {
         "tableName": "group",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "event",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `group` TEXT, `description` TEXT, `bars_per_occurrence` INTEGER NOT NULL, `bars_per_hour` INTEGER NOT NULL, `bars_for_yesterday` INTEGER NOT NULL, `bars_daily_limit` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `created` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `group` TEXT, `description` TEXT, `bars_extra` INTEGER NOT NULL, `bars_per_occurrence` INTEGER NOT NULL, `bars_per_hour` INTEGER NOT NULL, `bars_for_yesterday` INTEGER NOT NULL, `bars_per_occurrence_limit` INTEGER NOT NULL, `bars_daily_limit` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `created` INTEGER)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -71,6 +71,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "barsExtra",
+            "columnName": "bars_extra",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "barsPerOccurrence",
             "columnName": "bars_per_occurrence",
             "affinity": "INTEGER",
@@ -85,6 +91,12 @@
           {
             "fieldPath": "barsForYesterday",
             "columnName": "bars_for_yesterday",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "barsPerOccurrenceLimit",
+            "columnName": "bars_per_occurrence_limit",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -118,7 +130,7 @@
       },
       {
         "tableName": "event_instance",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `event` TEXT, `group` TEXT, `comment` TEXT, `bars_per_occurrence` INTEGER NOT NULL, `bars_per_hour` INTEGER NOT NULL, `bars_for_yesterday` INTEGER NOT NULL, `bars_daily_limit` INTEGER NOT NULL, `started` INTEGER, `duration` INTEGER NOT NULL, `created` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `name` TEXT, `group` TEXT, `description` TEXT, `bars_extra` INTEGER NOT NULL, `bars_per_occurrence` INTEGER NOT NULL, `bars_per_hour` INTEGER NOT NULL, `bars_for_yesterday` INTEGER NOT NULL, `bars_per_occurrence_limit` INTEGER NOT NULL, `bars_daily_limit` INTEGER NOT NULL, `started` INTEGER, `duration` INTEGER NOT NULL, `created` INTEGER)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -127,14 +139,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "title",
+            "columnName": "title",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "event",
-            "columnName": "event",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -145,10 +157,16 @@
             "notNull": false
           },
           {
-            "fieldPath": "comment",
-            "columnName": "comment",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "barsExtra",
+            "columnName": "bars_extra",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "barsPerOccurrence",
@@ -165,6 +183,12 @@
           {
             "fieldPath": "barsForYesterday",
             "columnName": "bars_for_yesterday",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "barsPerOccurrenceLimit",
+            "columnName": "bars_per_occurrence_limit",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -294,7 +318,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b2f709a05d25eeff2577bfae3e554fd0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '06ecd97091295ba345727bfd875b4f06')"
     ]
   }
 }

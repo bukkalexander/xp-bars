@@ -56,7 +56,7 @@
                 android:paddingBottom="20dp">
 
                 <EditText
-                    android:id="@+id/etEventInstanceTitle"
+                    android:id="@+id/etTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="44dp"
@@ -94,7 +94,7 @@
                     app:tint="@color/test_primary" />
 
                 <TextView
-                    android:id="@+id/twCategory"
+                    android:id="@+id/tvCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -112,13 +112,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/twCategory"
-                    app:layout_constraintStart_toEndOf="@+id/twCategory"
-                    app:layout_constraintTop_toTopOf="@+id/twCategory"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCategory"
+                    app:layout_constraintStart_toEndOf="@+id/tvCategory"
+                    app:layout_constraintTop_toTopOf="@+id/tvCategory"
                     app:tint="@color/test_primary" />
 
                 <TextView
-                    android:id="@+id/twEvent"
+                    android:id="@+id/tvEvent"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Study"
@@ -221,7 +221,7 @@
 
                 <EditText
                     android:layout_width="0dp"
-                    android:id="@+id/tvDescription"
+                    android:id="@+id/etDescription"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@null"
@@ -416,7 +416,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvBarsOccurrenceLimitNum"
+                            android:id="@+id/tvBarsPerOccurrenceLimitNum"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@null"

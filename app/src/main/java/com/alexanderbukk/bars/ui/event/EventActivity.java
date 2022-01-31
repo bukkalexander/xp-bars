@@ -34,8 +34,7 @@ public class EventActivity extends AppCompatActivity {
         setTitle(groupName);
 
         rvEvent = findViewById(R.id.rv_event);
-        EventRecyclerViewAdapter rvea = new EventRecyclerViewAdapter(this,
-                eventViewModel.getAllEventsFromGroup(groupName));
+        EventRecyclerViewAdapter rvea = new EventRecyclerViewAdapter(this);
         rvEvent.setAdapter(rvea);
         rvEvent.setLayoutManager(new LinearLayoutManager(this));
 
@@ -49,7 +48,7 @@ public class EventActivity extends AppCompatActivity {
         eventViewModel.getAllGroups().observe(this, new Observer<List<Group>>() {
             @Override
             public void onChanged(@Nullable List<Group> group) {
-                rvea.setEventColor(eventViewModel.getEventColor(groupName));
+                rvea.setGroup(eventViewModel.getGroupByName(groupName));
             }
         });
 

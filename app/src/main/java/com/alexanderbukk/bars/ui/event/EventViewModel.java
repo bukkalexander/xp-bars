@@ -48,11 +48,10 @@ public class EventViewModel extends AndroidViewModel {
         return events;
     }
 
-    public int getEventColor(String groupName) {
-
-            for (Group group : allGroups.getValue())
-                if (group.name.equals(groupName))
-                    return group.color;
-            return 0;
+    public Group getGroupByName(String groupName) {
+        for (Group group : allGroups.getValue())
+            if (group.name.equals(groupName))
+                return group;
+        return null;
     }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexanderbukk.bars.R;
 import com.alexanderbukk.bars.data.event.Event;
+import com.alexanderbukk.bars.data.group.Group;
 import com.alexanderbukk.bars.ui.event.EventViewHolder;
 
 import java.util.List;
@@ -20,11 +21,10 @@ public class EventRecyclerViewAdapter extends
 
     private Context context;
     private List<Event> events;
-    private int eventColor = 0;
+    private Group group;
 
-    public EventRecyclerViewAdapter(Context context, List<Event> events) {
+    public EventRecyclerViewAdapter(Context context) {
         this.context = context;
-        this.events = events;
     }
 
     @NonNull
@@ -37,9 +37,9 @@ public class EventRecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        holder.cvEvent.setCardBackgroundColor(eventColor);
-        holder.tvEvent.setText(events.get(position).name);
-        holder.tvEvent.setTextColor(Color.WHITE);
+        holder.setGroup(group);
+        holder.setEvent(events.get(position));
+
     }
 
     @Override
@@ -56,7 +56,8 @@ public class EventRecyclerViewAdapter extends
         notifyDataSetChanged();
     }
 
-    public void setEventColor(int eventColor) {
-        this.eventColor = eventColor;
+    public void setGroup(Group group) {
+        this.group = group;
+        notifyDataSetChanged();
     }
 }

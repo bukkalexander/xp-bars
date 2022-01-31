@@ -13,17 +13,20 @@ public class EventInstance {
     @PrimaryKey(autoGenerate = true)
     public int uid = 0;
 
-    @ColumnInfo(name = "name")
-    public String name = "";
+    @ColumnInfo(name = "title")
+    public String title = "";
 
-    @ColumnInfo(name = "event")
-    public String event;
+    @ColumnInfo(name = "name")
+    public String name;
 
     @ColumnInfo(name = "group")
     public String group;
 
-    @ColumnInfo(name = "comment")
-    public String comment = "";
+    @ColumnInfo(name = "description")
+    public String description = "";
+
+    @ColumnInfo(name = "bars_extra")
+    public int barsExtra;
 
     @ColumnInfo(name = "bars_per_occurrence")
     public int barsPerOccurrence;
@@ -33,6 +36,10 @@ public class EventInstance {
 
     @ColumnInfo(name = "bars_for_yesterday")
     public int barsForYesterday;
+
+    @ColumnInfo(name = "bars_per_occurrence_limit")
+    public int barsPerOccurrenceLimit;
+    // 0 means unlimited
 
     @ColumnInfo(name = "bars_daily_limit")
     public int barsDailyLimit;
@@ -47,17 +54,20 @@ public class EventInstance {
     @ColumnInfo(name = "created")
     public LocalDateTime localDateTimeCreated;
 
-    public EventInstance(@NonNull String name, @NonNull String event, @NonNull String group,
-                         @NonNull String comment, int barsPerOccurrence, int barsPerHour,
-                         int barsForYesterday, int barsDailyLimit, int durationMinutes,
+    public EventInstance(@NonNull String title, @NonNull String name, @NonNull String group,
+                         @NonNull String description, int barsExtra, int barsPerOccurrence,
+                         int barsPerHour, int barsForYesterday, int barsPerOccurrenceLimit,
+                         int barsDailyLimit, int durationMinutes,
                          @NonNull LocalDateTime localDateTimeStarted) {
+        this.title = title;
         this.name = name;
-        this.event = event;
         this.group = group;
-        this.comment = comment;
+        this.description = description;
+        this.barsExtra = barsExtra;
         this.barsPerOccurrence = barsPerOccurrence;
         this.barsPerHour = barsPerHour;
         this.barsForYesterday = barsForYesterday;
+        this.barsPerOccurrenceLimit = barsPerOccurrenceLimit;
         this.barsDailyLimit = barsDailyLimit;
         this.durationMinutes = durationMinutes;
         this.localDateTimeStarted =localDateTimeStarted;

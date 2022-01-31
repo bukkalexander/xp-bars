@@ -22,6 +22,9 @@ public class Event {
     @ColumnInfo(name = "description")
     public String description;
 
+    @ColumnInfo(name = "bars_extra")
+    public int barsExtra;
+
     @ColumnInfo(name = "bars_per_occurrence")
     public int barsPerOccurrence;
 
@@ -30,6 +33,10 @@ public class Event {
 
     @ColumnInfo(name = "bars_for_yesterday")
     public int barsForYesterday;
+
+    @ColumnInfo(name = "bars_per_occurrence_limit")
+    public int barsPerOccurrenceLimit;
+    // 0 means unlimited
 
     @ColumnInfo(name = "bars_daily_limit")
     public int barsDailyLimit;
@@ -42,14 +49,16 @@ public class Event {
     public LocalDateTime localDateTimeCreated;
 
     public Event(@NonNull String group, @NonNull String name, @NonNull String description,
-                 int barsPerOccurrence, int barsPerHour, int barsForYesterday, int barsDailyLimit,
-                 int durationMinutes) {
+                 int barsExtra, int barsPerOccurrence, int barsPerHour, int barsForYesterday,
+                 int barsPerOccurrenceLimit, int barsDailyLimit, int durationMinutes) {
         this.group = group;
         this.name = name;
         this.description = description;
+        this.barsExtra = barsExtra;
         this.barsPerOccurrence = barsPerOccurrence;
         this.barsPerHour = barsPerHour;
         this.barsForYesterday = barsForYesterday;
+        this.barsPerOccurrenceLimit = barsPerOccurrenceLimit;
         this.barsDailyLimit = barsDailyLimit;
         this.durationMinutes = durationMinutes;
         this.localDateTimeCreated = LocalDateTime.now();
