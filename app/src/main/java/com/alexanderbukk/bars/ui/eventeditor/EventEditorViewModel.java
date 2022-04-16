@@ -25,7 +25,7 @@ public class EventEditorViewModel extends AndroidViewModel {
     private final LiveData<List<Event>> allEvents;
     private final LiveData<List<Group>> allGroups;
     private final LiveData<List<EventInstance>> allEventInstances;
-
+//    private LiveData<Event> event;
 
     public EventEditorViewModel(Application application) {
         super(application);
@@ -36,6 +36,7 @@ public class EventEditorViewModel extends AndroidViewModel {
         allEvents = eventRepository.getAllEvents();
         allGroups = groupRepository.getAllGroups();
         allEventInstances = eventInstanceRepository.getAllEvents();
+//        event = eventRepository.getEvent();
     }
 
     public LiveData<List<Event>> getAllEvents() {
@@ -64,5 +65,13 @@ public class EventEditorViewModel extends AndroidViewModel {
             if (group.name.equals(groupName))
                 return group;
         return null;
+    }
+
+    public void insertEventInstance(EventInstance eventInstance) {
+        eventInstanceRepository.insert(eventInstance);
+    }
+
+    public LiveData<Event> getEventByGroupAndName(String groupName, String eventName) {
+        return eventRepository.getEventByGroupAndName(groupName, eventName);
     }
 }

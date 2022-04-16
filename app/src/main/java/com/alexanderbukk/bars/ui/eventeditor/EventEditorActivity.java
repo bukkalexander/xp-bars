@@ -2,6 +2,7 @@ package com.alexanderbukk.bars.ui.eventeditor;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,20 +20,22 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.alexanderbukk.bars.R;
+import com.alexanderbukk.bars.data.event.Event;
 import com.alexanderbukk.bars.data.eventinstance.EventInstance;
 import com.alexanderbukk.bars.data.group.Group;
-import com.alexanderbukk.bars.ui.event.EventViewModel;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class EventEditorActivity extends AppCompatActivity {
 
+    private String groupName;
+    private String eventName;
     private EventEditorViewModel eventEditorViewModel;
 
     private ImageButton ibClose;
@@ -63,17 +66,23 @@ public class EventEditorActivity extends AppCompatActivity {
     private TimePickerDialog timePickerDialogStart;
     private TimePickerDialog timePickerDialogEnd;
 
+    private LiveData<Event> event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_editor);
 
-        String groupName = getIntent().getExtras().getString("groupName");
-        String eventName = getIntent().getExtras().getString("eventName");
+        groupName = getIntent().getExtras().getString("groupName");
+        eventName = getIntent().getExtras().getString("eventName");
         setTitle(eventName);
 
         eventEditorViewModel = new ViewModelProvider(this).get(EventEditorViewModel.class);
-
+        eventEditorViewModel.getEventByGroupAndName(groupName, eventName).observe(this, new Observer<Event>() {
+            @Override
+            public void onChanged(@Nullable Event event) {
+                etTitle.setText(event.name);
+            }
+        });
         // =========================================================================================
         // Get views by id
         // =========================================================================================
@@ -135,12 +144,13 @@ public class EventEditorActivity extends AppCompatActivity {
         datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                LocalDate now = LocalDate.of(year, month+1, day);
-                String dateStr = now.format(DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy"));
-                tvStartDate.setText(dateStr);
+                calendarStart.set(year, month, day);
+                tvStartDate.setText(calendarToDateString(calendarStart));
             }
         }, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH));
 
+        // Start date text
+        tvStartDate.setText(calendarToDateString(calendarStart));
         tvStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,12 +163,13 @@ public class EventEditorActivity extends AppCompatActivity {
         datePickerDialogEnd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                LocalDate now = LocalDate.of(year, month+1, day);
-                String dateStr = now.format(DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy"));
-                tvEndDate.setText(dateStr);
+                calendarStart.set(year, month, day);
+                tvEndDate.setText(calendarToDateString(calendarEnd));
             }
         }, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH));
 
+        // End date text
+        tvEndDate.setText(calendarToDateString(calendarEnd));
         tvEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,12 +185,14 @@ public class EventEditorActivity extends AppCompatActivity {
         timePickerDialogStart = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                LocalTime now = LocalTime.of(hourOfDay, minute);
-                String timeStr = now.format(DateTimeFormatter.ofPattern("HH:mm"));
-                tvStartTime.setText(timeStr);
+                calendarStart.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendarStart.set(Calendar.MINUTE, minute);
+                tvStartTime.setText(calendarToTimeString(calendarStart));
             }
         }, calendarStart.get(Calendar.HOUR_OF_DAY), calendarStart.get(Calendar.MINUTE), true);
 
+        // Start time
+        tvStartTime.setText(calendarToTimeString(calendarStart));
         tvStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,12 +204,14 @@ public class EventEditorActivity extends AppCompatActivity {
         timePickerDialogEnd = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                LocalTime now = LocalTime.of(hourOfDay, minute);
-                String timeStr = now.format(DateTimeFormatter.ofPattern("HH:mm"));
-                tvEndTime.setText(timeStr);
+                calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendarEnd.set(Calendar.MINUTE, minute);
+                tvEndTime.setText(calendarToTimeString(calendarEnd));
             }
         }, calendarEnd.get(Calendar.HOUR_OF_DAY), calendarEnd.get(Calendar.MINUTE), true);
 
+        // End time
+        tvEndTime.setText(calendarToTimeString(calendarEnd));
         tvEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,12 +221,49 @@ public class EventEditorActivity extends AppCompatActivity {
 
     }
 
+    private String calendarToTimeString(Calendar calendar) {
+        LocalTime now = LocalTime.from(((GregorianCalendar) calendar).toZonedDateTime());
+        String timeStr = now.format(DateTimeFormatter.ofPattern("HH:mm"));
+        return timeStr;
+    }
+
+    private String calendarToDateString(Calendar calendar) {
+        LocalDate now = LocalDate.from(((GregorianCalendar) calendar).toZonedDateTime());
+        String dateStr = now.format(DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy"));
+        return dateStr;
+    }
+
     private void createEventInstance() {
 
-//        EventInstance eventInstance = new EventInstance(
-//                findViewById(R.id.etTitle).,
-//
-//        );
+        EventInstance eventInstance = new EventInstance(
+            etTitle.getText().toString(),
+            eventName,
+            groupName,
+            etDescription.getText().toString(),
+            toNonNullInt(etBarsExtra.getText().toString()),
+            toNonNullInt(tvBarsPerOccurrenceNum.getText().toString()),
+            toNonNullInt(tvBarsPerHourNum.getText().toString()),
+            toNonNullInt(tvBarsForYesterdayNum.getText().toString()),
+            toNonNullInt(tvBarsPerOccurrenceLimitNum.getText().toString()),
+            toNonNullInt(tvBarsDailyLimitNum.getText().toString()),
+            getLocalDateTime(calendarStart),
+            getLocalDateTime(calendarEnd)
+        );
+
+        eventEditorViewModel.insertEventInstance(eventInstance);
+
         Log.d(this.getLocalClassName(), "createEventInstance() called");
+    }
+
+    private int toNonNullInt(String str) {
+        return Integer.getInteger(str) != null ?  Integer.getInteger(str) : 0;
+    }
+
+    private LocalDateTime getLocalDateTime(Calendar calendar) {
+        return LocalDateTime.from(((GregorianCalendar) calendar).toZonedDateTime());
+    }
+
+    private int getDurationMinutes() {
+        return 0;
     }
 }

@@ -48,8 +48,8 @@ public class EventInstance {
     @ColumnInfo(name = "started")
     public LocalDateTime localDateTimeStarted;
 
-    @ColumnInfo(name = "duration")
-    public int durationMinutes;
+    @ColumnInfo(name = "ended")
+    public LocalDateTime localDateTimeEnded;
 
     @ColumnInfo(name = "created")
     public LocalDateTime localDateTimeCreated;
@@ -57,8 +57,8 @@ public class EventInstance {
     public EventInstance(@NonNull String title, @NonNull String name, @NonNull String group,
                          @NonNull String description, int barsExtra, int barsPerOccurrence,
                          int barsPerHour, int barsForYesterday, int barsPerOccurrenceLimit,
-                         int barsDailyLimit, int durationMinutes,
-                         @NonNull LocalDateTime localDateTimeStarted) {
+                         int barsDailyLimit, @NonNull LocalDateTime localDateTimeStarted,
+                         @NonNull LocalDateTime localDateTimeEnded) {
         this.title = title;
         this.name = name;
         this.group = group;
@@ -69,8 +69,8 @@ public class EventInstance {
         this.barsForYesterday = barsForYesterday;
         this.barsPerOccurrenceLimit = barsPerOccurrenceLimit;
         this.barsDailyLimit = barsDailyLimit;
-        this.durationMinutes = durationMinutes;
         this.localDateTimeStarted =localDateTimeStarted;
+        this.localDateTimeEnded =localDateTimeEnded;
         this.localDateTimeCreated = LocalDateTime.now();
     }
 }

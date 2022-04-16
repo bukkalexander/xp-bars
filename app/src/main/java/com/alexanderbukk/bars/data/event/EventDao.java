@@ -23,6 +23,10 @@ public interface EventDao {
     @Query("SELECT * FROM `event` WHERE name LIKE :name LIMIT 1")
     LiveData<Event> getRowByName(String name);
 
+    @Query("SELECT * FROM `event` WHERE name LIKE :name AND `group` LIKE :group LIMIT 1")
+    LiveData<Event> getRowByGroupAndName(String group, String name);
+
+
     @Insert
     void insertAll(Event... events);
 

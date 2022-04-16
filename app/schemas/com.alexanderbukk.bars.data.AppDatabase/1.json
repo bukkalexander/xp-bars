@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "06ecd97091295ba345727bfd875b4f06",
+    "identityHash": "a475cc4a9bc42e5cb3e0869f36196acf",
     "entities": [
       {
         "tableName": "group",
@@ -130,7 +130,7 @@
       },
       {
         "tableName": "event_instance",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `name` TEXT, `group` TEXT, `description` TEXT, `bars_extra` INTEGER NOT NULL, `bars_per_occurrence` INTEGER NOT NULL, `bars_per_hour` INTEGER NOT NULL, `bars_for_yesterday` INTEGER NOT NULL, `bars_per_occurrence_limit` INTEGER NOT NULL, `bars_daily_limit` INTEGER NOT NULL, `started` INTEGER, `duration` INTEGER NOT NULL, `created` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `name` TEXT, `group` TEXT, `description` TEXT, `bars_extra` INTEGER NOT NULL, `bars_per_occurrence` INTEGER NOT NULL, `bars_per_hour` INTEGER NOT NULL, `bars_for_yesterday` INTEGER NOT NULL, `bars_per_occurrence_limit` INTEGER NOT NULL, `bars_daily_limit` INTEGER NOT NULL, `started` INTEGER, `ended` INTEGER, `created` INTEGER)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -205,10 +205,10 @@
             "notNull": false
           },
           {
-            "fieldPath": "durationMinutes",
-            "columnName": "duration",
+            "fieldPath": "localDateTimeEnded",
+            "columnName": "ended",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "localDateTimeCreated",
@@ -318,7 +318,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '06ecd97091295ba345727bfd875b4f06')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a475cc4a9bc42e5cb3e0869f36196acf')"
     ]
   }
 }

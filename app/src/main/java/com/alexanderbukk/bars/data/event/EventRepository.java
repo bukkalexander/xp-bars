@@ -12,11 +12,13 @@ public class EventRepository {
     
     private EventDao eventDao;
     private LiveData<List<Event>> allEvents;
+    private LiveData<Event> event;
     
     public EventRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         eventDao = db.EventDao();
         allEvents = eventDao.getAll();
+        event = eventDao.getRowByName("Laundry start");
     }
 
     // Room executes all queries on a separate thread.
@@ -31,5 +33,13 @@ public class EventRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             eventDao.insertAll(event);
         });
+    }
+
+    public LiveData<Event> getEvent() {
+        return event;
+    }
+
+    public LiveData<Event> getEventByGroupAndName(String groupName, String eventName) {
+        return eventDao.getRowByGroupAndName(groupName, eventName);
     }
 }
