@@ -24,9 +24,13 @@ import com.alexanderbukk.bars.data.event.Event;
 import com.alexanderbukk.bars.data.eventinstance.EventInstance;
 import com.alexanderbukk.bars.data.group.Group;
 
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -77,14 +81,9 @@ public class EventEditorActivity extends AppCompatActivity {
         setTitle(eventName);
 
         eventEditorViewModel = new ViewModelProvider(this).get(EventEditorViewModel.class);
-        eventEditorViewModel.getEventByGroupAndName(groupName, eventName).observe(this, new Observer<Event>() {
-            @Override
-            public void onChanged(@Nullable Event event) {
-                etTitle.setText(event.name);
-            }
-        });
+
         // =========================================================================================
-        // Get views by id
+        // Initialize views
         // =========================================================================================
         ibClose = findViewById(R.id.ibClose);
         btnSave = findViewById(R.id.btnSave);
@@ -107,6 +106,31 @@ public class EventEditorActivity extends AppCompatActivity {
         tvBarsTotalNum = findViewById(R.id.tvBarsTotalNum);
 
         // =========================================================================================
+        // Initialize calendars
+        // =========================================================================================
+        calendarStart = Calendar.getInstance();
+        calendarEnd = Calendar.getInstance();
+
+        // =========================================================================================
+        // Add view model observers for updating views from selected Event
+        // =========================================================================================
+        eventEditorViewModel.getEventByGroupAndName(groupName, eventName).observe(this, new Observer<Event>() {
+            @Override
+            public void onChanged(@Nullable Event event) {
+                etDescription.setText(event.description);
+                etBarsExtra.setText(Integer.toString(event.barsExtra));
+                tvBarsPerOccurrenceNum.setText(Integer.toString(event.barsPerOccurrence));
+                tvBarsPerHourNum.setText(Integer.toString(event.barsPerHour));
+                tvBarsForYesterdayNum.setText(Integer.toString(event.barsForYesterday));
+                tvBarsPerOccurrenceLimitNum.setText(Integer.toString(event.barsPerOccurrenceLimit));
+                tvBarsDailyLimitNum.setText(Integer.toString(event.barsDailyLimit));
+                addMinutesToCalendar(calendarEnd, event.durationMinutes);
+                tvEndDate.setText(calendarToDateString(calendarEnd));
+                tvEndTime.setText(calendarToTimeString(calendarEnd));
+            }
+        });
+
+        // =========================================================================================
         // Set button on click listeners
         // =========================================================================================
         ibClose.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +149,7 @@ public class EventEditorActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-//        ivCategory.setColorFilter(eventEditorViewModel.getGroupByName(groupName).color);
+
         tvCategory.setText(groupName);
         tvEvent.setText(eventName);
         eventEditorViewModel.getAllGroups().observe(this, new Observer<List<Group>>() {
@@ -140,12 +164,16 @@ public class EventEditorActivity extends AppCompatActivity {
         // Initialize calendar and date pickers
         // =========================================================================================
         // Start date
-        calendarStart = Calendar.getInstance();
         datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                LocalDateTime dateTimeCalendarStart = getLocalDateTime(calendarStart);
                 calendarStart.set(year, month, day);
+                LocalDateTime dateTimeCalendarStartNew = getLocalDateTime(calendarStart);
+                calendarEnd.add(Calendar.SECOND, (int) Duration.between(dateTimeCalendarStart, dateTimeCalendarStartNew).getSeconds());
+
                 tvStartDate.setText(calendarToDateString(calendarStart));
+                tvEndDate.setText(calendarToDateString(calendarEnd));
             }
         }, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH));
 
@@ -159,12 +187,19 @@ public class EventEditorActivity extends AppCompatActivity {
         });
 
         // End date
-        calendarEnd = Calendar.getInstance();
         datePickerDialogEnd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStart.set(year, month, day);
-                tvEndDate.setText(calendarToDateString(calendarEnd));
+                // Make sure end date is later than start date
+                Calendar calendarEndNew = (Calendar) calendarEnd.clone();
+                calendarEndNew.set(year, month, day);
+                LocalDateTime dateTimeCalendarStart = getLocalDateTime(calendarStart);
+                LocalDateTime dateTimeCalendarEndNew = getLocalDateTime(calendarEndNew);
+                int duration = (int) Duration.between(dateTimeCalendarStart, dateTimeCalendarEndNew).getSeconds();
+                if (duration >= 0) {
+                    calendarEnd.set(year, month, day);
+                    tvEndDate.setText(calendarToDateString(calendarEnd));
+                }
             }
         }, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH));
 
@@ -173,6 +208,10 @@ public class EventEditorActivity extends AppCompatActivity {
         tvEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                datePickerDialogEnd.getDatePicker().updateDate(
+                        calendarEnd.get(Calendar.YEAR),
+                        calendarEnd.get(Calendar.MONTH),
+                        calendarEnd.get(Calendar.DAY_OF_MONTH));
                 datePickerDialogEnd.show();
             }
         });
@@ -218,7 +257,26 @@ public class EventEditorActivity extends AppCompatActivity {
                 timePickerDialogEnd.show();
             }
         });
+    }
 
+    private void updateDateTimeViews() {
+        tvStartDate.setText(calendarToDateString(calendarStart));
+        tvStartTime.setText(calendarToTimeString(calendarStart));
+        tvEndDate.setText(calendarToDateString(calendarEnd));
+        tvEndTime.setText(calendarToTimeString(calendarEnd));
+    }
+
+    private void addDateTimeToCalendar(Calendar calendarEnd, LocalDateTime dateTimeStartDifference) {
+        Log.d("","");
+    }
+
+    private LocalDateTime getLocalDateTimeDifference(LocalDateTime dateTimeCalendarStart, LocalDateTime dateTimeCalendarStartNew) {
+        Timestamp timestamp = (Timestamp) Timestamp.from(dateTimeCalendarStart.toInstant(ZoneOffset.ofHours(Calendar.ZONE_OFFSET)));
+        return LocalDateTime.now();
+    }
+
+    private void addMinutesToCalendar(Calendar calendarEnd, int durationMinutes) {
+        calendarEnd.add(Calendar.MINUTE, durationMinutes);
     }
 
     private String calendarToTimeString(Calendar calendar) {
