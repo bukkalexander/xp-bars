@@ -2,13 +2,14 @@ package com.alexanderbukk.bars.ui.eventeditor;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,19 +25,19 @@ import com.alexanderbukk.bars.data.event.Event;
 import com.alexanderbukk.bars.data.eventinstance.EventInstance;
 import com.alexanderbukk.bars.data.group.Group;
 
-import java.sql.Timestamp;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class EventEditorActivity extends AppCompatActivity {
+
+    private static final double SECONDS_TO_HOURS = 1.0/(60.0*60.0);
 
     private String groupName;
     private String eventName;
@@ -70,7 +71,10 @@ public class EventEditorActivity extends AppCompatActivity {
     private TimePickerDialog timePickerDialogStart;
     private TimePickerDialog timePickerDialogEnd;
 
-    private LiveData<Event> event;
+    private Event event;
+    private List<EventInstance> eventInstances;
+    private boolean isUpdateViewsFromEvent = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,19 +118,21 @@ public class EventEditorActivity extends AppCompatActivity {
         // =========================================================================================
         // Add view model observers for updating views from selected Event
         // =========================================================================================
-        eventEditorViewModel.getEventByGroupAndName(groupName, eventName).observe(this, new Observer<Event>() {
+        eventEditorViewModel.getEventByGroupAndName(groupName, eventName).observe(this,
+                new Observer<Event>() {
             @Override
             public void onChanged(@Nullable Event event) {
-                etDescription.setText(event.description);
-                etBarsExtra.setText(Integer.toString(event.barsExtra));
-                tvBarsPerOccurrenceNum.setText(Integer.toString(event.barsPerOccurrence));
-                tvBarsPerHourNum.setText(Integer.toString(event.barsPerHour));
-                tvBarsForYesterdayNum.setText(Integer.toString(event.barsForYesterday));
-                tvBarsPerOccurrenceLimitNum.setText(Integer.toString(event.barsPerOccurrenceLimit));
-                tvBarsDailyLimitNum.setText(Integer.toString(event.barsDailyLimit));
-                addMinutesToCalendar(calendarEnd, event.durationMinutes);
-                tvEndDate.setText(calendarToDateString(calendarEnd));
-                tvEndTime.setText(calendarToTimeString(calendarEnd));
+                setEvent(event);
+                updateViewsFromEvent();
+            }
+        });
+
+        eventEditorViewModel.getAllEventsFromGroupAndName(groupName, eventName).observe(this,
+                new Observer<List<EventInstance>>() {
+            @Override
+            public void onChanged(@Nullable List<EventInstance> eventInstances) {
+                setEventInstances(eventInstances);
+                updateViewsFromEventInstances();
             }
         });
 
@@ -159,7 +165,6 @@ public class EventEditorActivity extends AppCompatActivity {
             }
         });
 
-
         // =========================================================================================
         // Initialize calendar and date pickers
         // =========================================================================================
@@ -174,6 +179,8 @@ public class EventEditorActivity extends AppCompatActivity {
 
                 tvStartDate.setText(calendarToDateString(calendarStart));
                 tvEndDate.setText(calendarToDateString(calendarEnd));
+
+                updateTotalBars();
             }
         }, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH));
 
@@ -200,6 +207,8 @@ public class EventEditorActivity extends AppCompatActivity {
                     calendarEnd.set(year, month, day);
                     tvEndDate.setText(calendarToDateString(calendarEnd));
                 }
+
+                updateTotalBars();
             }
         }, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH));
 
@@ -227,6 +236,7 @@ public class EventEditorActivity extends AppCompatActivity {
                 calendarStart.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendarStart.set(Calendar.MINUTE, minute);
                 tvStartTime.setText(calendarToTimeString(calendarStart));
+                updateTotalBars();
             }
         }, calendarStart.get(Calendar.HOUR_OF_DAY), calendarStart.get(Calendar.MINUTE), true);
 
@@ -246,6 +256,7 @@ public class EventEditorActivity extends AppCompatActivity {
                 calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendarEnd.set(Calendar.MINUTE, minute);
                 tvEndTime.setText(calendarToTimeString(calendarEnd));
+                updateTotalBars();
             }
         }, calendarEnd.get(Calendar.HOUR_OF_DAY), calendarEnd.get(Calendar.MINUTE), true);
 
@@ -257,22 +268,53 @@ public class EventEditorActivity extends AppCompatActivity {
                 timePickerDialogEnd.show();
             }
         });
+
+        // =========================================================================================
+        // Set on change listeners
+        // =========================================================================================
+        etBarsExtra.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                updateTotalBars();
+            }
+        });
     }
 
-    private void updateDateTimeViews() {
-        tvStartDate.setText(calendarToDateString(calendarStart));
-        tvStartTime.setText(calendarToTimeString(calendarStart));
+    private void updateViewsFromEventInstances() {
+        updateTotalBars();
+    }
+
+    private void updateViewsFromEvent() {
+        etDescription.setText(event.description);
+        etBarsExtra.setText(Integer.toString(event.barsExtra));
+        tvBarsPerOccurrenceNum.setText(Integer.toString(event.barsPerOccurrence));
+        tvBarsPerHourNum.setText(Integer.toString(event.barsPerHour));
+        tvBarsForYesterdayNum.setText(Integer.toString(event.barsForYesterday));
+        tvBarsPerOccurrenceLimitNum.setText(Integer.toString(event.barsPerOccurrenceLimit));
+        tvBarsDailyLimitNum.setText(Integer.toString(event.barsDailyLimit));
+        addMinutesToCalendar(calendarEnd, event.durationMinutes);
         tvEndDate.setText(calendarToDateString(calendarEnd));
         tvEndTime.setText(calendarToTimeString(calendarEnd));
+        isUpdateViewsFromEvent = true;
     }
 
-    private void addDateTimeToCalendar(Calendar calendarEnd, LocalDateTime dateTimeStartDifference) {
-        Log.d("","");
+    private void setEvent(Event event) {
+        this.event = event;
     }
 
-    private LocalDateTime getLocalDateTimeDifference(LocalDateTime dateTimeCalendarStart, LocalDateTime dateTimeCalendarStartNew) {
-        Timestamp timestamp = (Timestamp) Timestamp.from(dateTimeCalendarStart.toInstant(ZoneOffset.ofHours(Calendar.ZONE_OFFSET)));
-        return LocalDateTime.now();
+    private void setEventInstances(List<EventInstance> eventInstances) {
+        this.eventInstances = eventInstances;
     }
 
     private void addMinutesToCalendar(Calendar calendarEnd, int durationMinutes) {
@@ -292,7 +334,6 @@ public class EventEditorActivity extends AppCompatActivity {
     }
 
     private void createEventInstance() {
-
         EventInstance eventInstance = new EventInstance(
             etTitle.getText().toString(),
             eventName,
@@ -314,14 +355,76 @@ public class EventEditorActivity extends AppCompatActivity {
     }
 
     private int toNonNullInt(String str) {
-        return Integer.getInteger(str) != null ?  Integer.getInteger(str) : 0;
+        if (str == null)
+            return 0;
+        else if(str.equals(""))
+            return 0;
+        else
+            return Integer.parseInt(str);
     }
 
     private LocalDateTime getLocalDateTime(Calendar calendar) {
         return LocalDateTime.from(((GregorianCalendar) calendar).toZonedDateTime());
     }
 
-    private int getDurationMinutes() {
-        return 0;
+    private void updateTotalBars() {
+        if (!isUpdateViewsFromEvent)
+            return;
+
+        // Calculate total bars
+        int totalBars = 0;
+        double barsExtra = toNonNullInt(etBarsExtra.getText().toString());
+        double barsPerOccurens = toNonNullInt(tvBarsPerOccurrenceNum.getText().toString());
+
+        double barsPerHour = toNonNullInt(tvBarsPerHourNum.getText().toString());
+        double durationSeconds = (double) Duration.between(getLocalDateTime(calendarStart), getLocalDateTime(calendarEnd)).getSeconds();
+        double durationHours = secondsToHours(durationSeconds);
+        double barsPerHourTotal = barsPerHour*durationHours;
+
+        double barsForYesterday = 0.0;
+        if (hasBarsFromYesterday())
+            barsForYesterday = toNonNullInt(tvBarsForYesterdayNum.getText().toString());
+
+
+        double barsPerOccurrenceLimit = toNonNullInt(tvBarsPerOccurrenceLimitNum.getText().toString());
+        double barsDailyLimit = toNonNullInt(tvBarsDailyLimitNum.getText().toString());
+
+        ArrayList<Double> barsList = new ArrayList<>();
+        barsList.add(barsExtra + barsPerOccurens + barsPerHourTotal + barsForYesterday);
+        if (barsPerOccurrenceLimit > 0)
+            barsList.add(barsPerOccurrenceLimit);
+        if (barsDailyLimit > 0)
+            barsList.add(barsDailyLimit);
+
+        int totalMin = barsList.stream().min(Double::compare).get().intValue();
+
+        totalBars = totalMin;
+
+        // Build Bars total calc string
+        String barsTotalCalcString = "";
+        barsTotalCalcString += "⌊";
+        barsTotalCalcString += String.format("min{%.0f+%.0f+%.1f*%.0f+%.0f", barsExtra, barsPerOccurens,
+                durationHours, barsPerHour, barsForYesterday);
+
+        if (barsPerOccurrenceLimit > 0)
+            barsTotalCalcString += String.format(", %.0f", barsPerOccurrenceLimit);
+
+        if (barsDailyLimit > 0)
+            barsTotalCalcString += String.format(", %.0f", barsDailyLimit);
+
+        barsTotalCalcString += "}";
+        barsTotalCalcString +="⌋";
+
+
+        tvBarsTotalCalc.setText(barsTotalCalcString);
+        tvBarsTotalNum.setText(Integer.toString(totalBars));
+    }
+
+    private double secondsToHours(double durationSeconds) {
+        return durationSeconds*SECONDS_TO_HOURS;
+    }
+
+    private boolean hasBarsFromYesterday() {
+        return false;
     }
 }

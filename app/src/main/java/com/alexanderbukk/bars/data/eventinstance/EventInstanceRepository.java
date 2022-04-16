@@ -32,4 +32,9 @@ public class EventInstanceRepository {
             eventInstanceDao.insertAll(eventInstance);
         });
     }
+
+    public LiveData<List<EventInstance>> getAllEventInstancesByGroupAndName(String groupName,
+                                                                            String eventName) {
+        return eventInstanceDao.getRowsByGroupAndName(groupName, eventName);
+    }
 }

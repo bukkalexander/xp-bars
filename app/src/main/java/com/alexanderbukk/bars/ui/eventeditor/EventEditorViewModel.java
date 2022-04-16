@@ -74,4 +74,8 @@ public class EventEditorViewModel extends AndroidViewModel {
     public LiveData<Event> getEventByGroupAndName(String groupName, String eventName) {
         return eventRepository.getEventByGroupAndName(groupName, eventName);
     }
+
+    public LiveData<List<EventInstance>> getAllEventsFromGroupAndName(String groupName, String eventName) {
+        return eventInstanceRepository.getAllEventInstancesByGroupAndName(groupName, eventName);
+    }
 }

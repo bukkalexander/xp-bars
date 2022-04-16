@@ -29,4 +29,6 @@ public interface EventInstanceDao {
     @Query("DELETE FROM `event_instance`")
     void deleteAll();
 
+    @Query("SELECT * FROM `event_instance` WHERE name LIKE :name AND `group` LIKE :group")
+    LiveData<List<EventInstance>> getRowsByGroupAndName(String group, String name);
 }
